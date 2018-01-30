@@ -145,42 +145,55 @@ var bullets;
 var running = true;
 var pid;
 
-player = new SpaceObject();
-player.size = 5;
-player.x = 400;
-player.y = 300;
-modelShip = [];
-modelShip.push({x:0, y:-5});
-modelShip.push({x:-2.5, y:2.5});
-modelShip.push({x:2.5, y:2.5});
+function setup() {
+    player = new SpaceObject();
+    player.size = 5;
+    player.x = 400;
+    player.y = 300;
+    modelShip = [];
+    modelShip.push({x:0, y:-5});
+    modelShip.push({x:-2.5, y:2.5});
+    modelShip.push({x:2.5, y:2.5});
 
-modelAsteroid = [];
-var verts = 20;
-for (var i = 0; i < verts; i ++) {
-    //var radius = 1;
-    var radius = Math.random()  * (1.2 - 0.8) + 0.8;
-    var a = i / verts * Math.PI * 2;
-    var v = {
-        x: radius * Math.sin(a),
-        y: radius * Math.cos(a)
-    };
-    modelAsteroid.push(v);
+    modelAsteroid = [];
+    var verts = 20;
+    for (var i = 0; i < verts; i ++) {
+        //var radius = 1;
+        var radius = Math.random()  * (1.2 - 0.8) + 0.8;
+        var a = i / verts * Math.PI * 2;
+        var v = {
+            x: radius * Math.sin(a),
+            y: radius * Math.cos(a)
+        };
+        modelAsteroid.push(v);
+    }
+
+    asteroids = [];
+    var asteroid = new SpaceObject();
+    var angle = Math.random() * Math.PI * 2;
+    asteroid.size = 64; //64 - 32 - 16 - 8
+    asteroid.x =  Math.random()  * (300 - 50) + 50;
+    asteroid.y = Math.random()  * (500 - 100) + 100;
+    asteroid.dx = 0.05 * Math.sin(angle);
+    asteroid.dy = 0.05 * Math.cos(angle);
+    asteroids.push(asteroid);
+
+    asteroid = new SpaceObject();
+    asteroid.size = 64; //64 - 32 - 16 - 8
+    angle = Math.random() * Math.PI * 2;
+    asteroid.x = Math.random()  * (750 - 500) + 500;
+    asteroid.y = Math.random()  * (500 - 100) + 100;
+    asteroid.dx = 0.05 * Math.sin(angle);
+    asteroid.dy = 0.05 * Math.cos(angle);
+    asteroids.push(asteroid);
+
+    bullets = [];
 }
-
-asteroids = [];
-var asteroid = new SpaceObject();
-asteroid.size = 64; //64 - 32 - 16 - 8
-asteroid.x = 100;
-asteroid.y = 100;
-asteroid.dx = 0.05;
-asteroid.dy = 0.05;
-asteroids.push(asteroid);
-
-bullets = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     canvas = document.getElementById("field");
     ctx = canvas.getContext('2d');
+    setup();
     requestAnimationFrame(run);
 });
 
@@ -201,6 +214,7 @@ document.addEventListener("keydown", function(event) {
         b.y = player.y;
         b.dx = Math.sin(player.angle) * 0.1;
         b.dy = -Math.cos(player.angle) * 0.1;
+        b.angle = player.angle;
         bullets.push(b);
     }
 });
