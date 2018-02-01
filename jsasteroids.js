@@ -60,8 +60,8 @@ function handleInput() {
     }
     if (pressedKeys[38]) {
         console.log("UP");
-        player.dx += Math.sin(player.angle) * 0.01 * elapsed;
-        player.dy += -Math.cos(player.angle) * 0.01 * elapsed;
+        player.dx += Math.sin(player.angle) * 0.005 * elapsed;
+        player.dy += -Math.cos(player.angle) * 0.005 * elapsed;
     }
 }
 
@@ -189,6 +189,7 @@ var bullets;
 var running = true;
 var pid;
 var pressedKeys = {};
+var modelBullet = [];
 
 function setup() {
     player = new SpaceObject();
@@ -200,6 +201,17 @@ function setup() {
     modelShip.push({x:-2.5, y:2.5});
     modelShip.push({x:2.5, y:2.5});
 
+    var verts = 20;
+    for (var i = 0; i < verts; i ++) {
+        var radius = 1;
+        var a = i / verts * Math.PI * 2;
+        var v = {
+            x: radius * Math.sin(a),
+            y: radius * Math.cos(a)
+        };
+        modelBullet.push(v);
+    }
+        
     asteroids = [];
     var asteroid = new SpaceObject();
     var angle = Math.random() * Math.PI * 2;
@@ -308,7 +320,7 @@ function drawAsteroids() {
 function drawBullets() {
     for (var i = 0; i < bullets.length; i++) {
         var a = bullets[i];
-        drawWireframe(ctx, modelAsteroid, a.x, a.y, a.angle, 1, "white");
+        drawWireframe(ctx, modelBullet, a.x, a.y, a.angle, 1, "white");
     }
 }
 
