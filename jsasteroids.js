@@ -51,15 +51,12 @@ function drawWireframe(ctx, coordinates, x, y, r, s, color) {
 
 function handleInput() {
     if (pressedKeys[39]) {
-        console.log("RIGHT");
         player.angle += 0.007  * elapsed;
     }
     if (pressedKeys[37]) {
-        console.log("LEFT");
         player.angle -= 0.007 * elapsed;
     }
     if (pressedKeys[38]) {
-        console.log("UP");
         player.dx += Math.sin(player.angle) * 0.005 * elapsed;
         player.dy += -Math.cos(player.angle) * 0.005 * elapsed;
     }
